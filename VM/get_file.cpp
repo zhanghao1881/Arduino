@@ -28,13 +28,15 @@ void get_cmd(int data)
     case 1:
       {
         frame_len = data;
-        //length        Serial.println(data);
+        //length
+        Serial.println(data);
         state = 2;
         break;
       }
     case 2:
       {
         buf[data_pt++] = data;
+        Serial.println(buf[--data_pt]);
         if (data_pt >= MAX_BUF || data_pt >= frame_len)
         {
           state = 3;
