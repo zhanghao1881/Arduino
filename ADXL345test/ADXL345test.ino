@@ -8,7 +8,7 @@
 #define Register_Y1 0x35
 #define Register_Z0 0x36
 #define Register_Z1 0x37
-
+//SCL-A5    SDA-A4
 
 int ADXAddress = 0xA6>>1;  //转换为7位地址
 int reading = 0;
