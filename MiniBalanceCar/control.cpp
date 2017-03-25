@@ -69,7 +69,7 @@ int Balance_Pwm(float Angle, float Gyro)
 {
   float Bias;
   int balance;
-  Bias = Angle - 2;   //===求出平衡的角度中值 和机械相关
+  Bias = Angle - 0;   //===求出平衡的角度中值 和机械相关
   balance = Balance_Kp * Bias + Gyro * Balance_Kd; //===计算平衡控制的电机PWM  PD控制   kp是P系数 kd是D系数
   return balance;
 }
@@ -107,8 +107,8 @@ void Run()
 {
   if (++Velocity_Count >= 8)
   {
-    MotorA = Balance_Pwm(Get_Angle(), Get_AngleV())+velocity_Pwm(Get_Velocity_L(),Get_Velocity_R());
-    MotorB = Balance_Pwm(Get_Angle(), Get_AngleV())+velocity_Pwm(Get_Velocity_L(),Get_Velocity_R());
+   // MotorA = Balance_Pwm(Get_Angle(), Get_AngleV())+velocity_Pwm(Get_Velocity_L(),Get_Velocity_R());
+   // MotorB = Balance_Pwm(Get_Angle(), Get_AngleV())+velocity_Pwm(Get_Velocity_L(),Get_Velocity_R());
   }
   MotorA = Balance_Pwm(Get_Angle(), Get_AngleV());
   MotorB = Balance_Pwm(Get_Angle(), Get_AngleV());
