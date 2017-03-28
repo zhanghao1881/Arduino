@@ -40,9 +40,10 @@ void loop()
   if(Wire.available()<=2);
   {
     X0 = Wire.read();
-    X1 = Wire.read();
-    X1 = X1<<8;
-    X_out = X0+X1;
+    X_out = Wire.read();
+    X_out = (X_out<<8) + X0;
+   // X_out = X0+X1;
+   // X_out = Wire.read()<<8 + X0;
   }
 
   Wire.beginTransmission(ADXAddress);
