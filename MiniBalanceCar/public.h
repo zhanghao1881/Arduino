@@ -9,7 +9,7 @@
 /* IIC SDA A4 SCL A5 */
 #include<Wire.h>
 
-#define BAUD 38400
+#define BAUD 115200
 /*PID相关常数*/
 //直立pid
 #define BALANCE_KP 15

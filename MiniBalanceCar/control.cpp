@@ -8,6 +8,7 @@ float Velocity_Ki = VELOCITY_KI;
 int MotorA;
 int MotorB;
 
+//编码器计数
 int Velocity_Count = 0;
 
 void Initialize()
@@ -50,6 +51,7 @@ void Initialize()
   Velocity_Count = 0;
 
 }
+//遥控
 void Telecontrol()
 {
   switch (T_STATE)
@@ -64,7 +66,7 @@ void Telecontrol()
     default: break;
   }
 }
-
+平衡pd
 int Balance_Pwm(float Angle, float Gyro)
 {
   float Bias;
@@ -73,6 +75,8 @@ int Balance_Pwm(float Angle, float Gyro)
   balance = Balance_Kp * Bias + Gyro * Balance_Kd; //===计算平衡控制的电机PWM  PD控制   kp是P系数 kd是D系数
   return balance;
 }
+
+//速度pi
 int velocity_Pwm(int encoder_left, int encoder_right)
 {
   static float Velocity, Encoder_Least, Encoder, Movement;
@@ -91,6 +95,8 @@ int velocity_Pwm(int encoder_left, int encoder_right)
   if (Get_Angle() < 5)    Encoder_Integral = 0; //小车停止的时候积分清零
   return Velocity;
 }
+
+//限幅
 void Limit_Pwm(void)
 {
   int Amplitude = 250;  //===PWM满幅是255 限制在250
@@ -105,6 +111,7 @@ void Limit_Pwm(void)
 
 void Run()
 {
+  //加上编码器
   if (++Velocity_Count >= 8)
   {
    // MotorA = Balance_Pwm(Get_Angle(), Get_AngleV())+velocity_Pwm(Get_Velocity_L(),Get_Velocity_R());
@@ -114,4 +121,5 @@ void Run()
   MotorB = Balance_Pwm(Get_Angle(), Get_AngleV());
   Limit_Pwm();
   Set_Pwm(MotorA, MotorB);
+  
 }

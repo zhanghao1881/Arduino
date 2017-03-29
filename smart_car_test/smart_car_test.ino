@@ -1,20 +1,19 @@
 #include"public.h"
 
+
+
+float Collect_Info()
+{
+  
+  }
 void setup() {
   // put your setup code here, to run once:
-  Initialize();
+  Init();
 }
- long Count_L = 0;
- long Count_R = 0;
- int n = 0;
- 
+
 void loop() {
   // put your main code here, to run repeatedly:
-  Run();
-  if(++n>100){
-  testPoseInfo();
-  n=0;}
+ Test_print();
+ Serial.println(analogRead(INFO_COLLECT_0));
+
 }
-
-
-

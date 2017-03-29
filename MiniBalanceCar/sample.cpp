@@ -74,7 +74,7 @@ void testPoseInfo()
   //accelgyro.getAcceleration(&ax, &ay, &az);
   //accelgyro.getRotation(&gx, &gy, &gz);
   KalFilter.Angletest(ax, ay, az, gx, gy, gz, dt, Q_angle, Q_gyro, R_angle, C_0, K1);          //通过卡尔曼滤波获取角度
-  Serial.print(KalFilter.angle); Serial.print("\t");
+  Serial.println(KalFilter.angle6);
   // display tab-separated accel/gyro x/y/z values
   /* Serial.print("a/g:\t");
     Serial.print(ax/131.00); Serial.print("\t");
