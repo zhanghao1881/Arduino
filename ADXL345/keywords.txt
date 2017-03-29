@@ -1,0 +1,7 @@
+ Syntax Coloring Map For ADXL345
+
+
+begin	KEYWORD2
+readData	KEYWORD2
+
+ADXL345	KEYWORD1
