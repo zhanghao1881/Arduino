@@ -1,10 +1,10 @@
 
 //电机控制引脚相关宏定义
-#define LEFT_MOTOR_FRONT 2
-#define LEFT_MOTOR_BACK 3
+#define LEFT_MOTOR_FRONT 3
+#define LEFT_MOTOR_BACK 2
 #define LEFT_PWM 9
-#define RIGHT_MOTOR_FRONT 4
-#define RIGHT_MOTOR_BACK 5
+#define RIGHT_MOTOR_FRONT 5
+#define RIGHT_MOTOR_BACK 4
 #define RIGHT_PWM 10
 #define MOTOR_EN 6
 
@@ -12,19 +12,19 @@
    --------------------------------------------车头-------------------------------------
    INFO_COLLECT_L2---INFO_COLLECT_L1---INFO_COLLECT_0---INFO_COLLECT_R1---INFO_COLLECT_R2
 */
-#define INFO_COLLECT_L2 7
-#define INFO_COLLECT_L1 8
-#define INFO_COLLECT_0 9
-#define INFO_COLLECT_R1 11
-#define INFO_COLLECT_R2 12
+#define INFO_COLLECT_L2 A4
+#define INFO_COLLECT_L1 A2
+#define INFO_COLLECT_0 A3
+#define INFO_COLLECT_R1 A1
+#define INFO_COLLECT_R2 A0
 
 //常量定义
-#define NORMAL_SPEED_LEFT   100
-#define NORMAL_SPEED_RIGHT  100
-#define TURN_SPEED_LEFT_30  180
-#define TURN_SPEED_LEFT_60  230
-#define TURN_SPEED_RIGHT_30 180
-#define TURN_SPEED_RIGHT_60 230
+#define NORMAL_SPEED_LEFT   150
+#define NORMAL_SPEED_RIGHT  150
+#define TURN_SPEED_LEFT_30  0
+#define TURN_SPEED_LEFT_60  250
+#define TURN_SPEED_RIGHT_30 0
+#define TURN_SPEED_RIGHT_60 250
 #define MAX_DEVIATION 10
 //小车状态
 enum {S_FRONT, S_RIGHT_30, S_RIGHT_60, S_LEFT_30, S_LEFT_60, S_STOP} STATA;
@@ -55,6 +55,7 @@ void Init()
 
   //打开电机驱动使能端
   digitalWrite(MOTOR_EN, HIGH);
+  Serial.begin(9600);
 }
 void Motor(int pwm_l, int pwm_r)
 {
@@ -87,22 +88,22 @@ void Control(byte STATA)
       }
     case S_RIGHT_30:
       {
-        Motor(TURN_SPEED_LEFT_30, NORMAL_SPEED_RIGHT);
+        Motor(NORMAL_SPEED_LEFT, TURN_SPEED_RIGHT_30);
         break;
       }
     case S_RIGHT_60:
       {
-        Motor(TURN_SPEED_LEFT_60, NORMAL_SPEED_RIGHT);
+        Motor(TURN_SPEED_LEFT_60, TURN_SPEED_RIGHT_30);
         break;
       }
     case S_LEFT_30:
       {
-        Motor(NORMAL_SPEED_LEFT, TURN_SPEED_RIGHT_30);
+        Motor(TURN_SPEED_LEFT_30, NORMAL_SPEED_RIGHT);
         break;
       }
     case S_LEFT_60:
       {
-        Motor(NORMAL_SPEED_LEFT, TURN_SPEED_RIGHT_60);
+        Motor(TURN_SPEED_LEFT_30, TURN_SPEED_RIGHT_60);
         break;
       }
     case S_STOP:
@@ -119,22 +120,27 @@ void Collect_Info()
 {
   if (digitalRead(INFO_COLLECT_L2))
   {
+    Serial.print("l2");
     STATA = S_LEFT_60;
   }
   else if (digitalRead(INFO_COLLECT_L1))
   {
+        Serial.print("l1");
     STATA = S_LEFT_30;
   }
   else if (digitalRead(INFO_COLLECT_0))
   {
+        Serial.print("0");
     STATA = S_FRONT;
   }
   else if (digitalRead(INFO_COLLECT_R1))
   {
+        Serial.print("r1");
     STATA = S_RIGHT_30;
   }
   else if (digitalRead(INFO_COLLECT_R2))
   {
+        Serial.print("r2");
     STATA = S_RIGHT_60;
   }
   else
@@ -154,7 +160,8 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Collect_Info();
-  Control(STATA);
-
+  //Collect_Info();
+  //Control(STATA);
+  //delay(5);
+Motor(100, 100);
 }

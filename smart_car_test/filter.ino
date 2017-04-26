@@ -58,11 +58,11 @@ float Filter(char info)
 {
   last_value = new_value;
   new_value = analogRead(info);
-  if ( ( new_value - r_value > THRESHOLD ) || ( r_value - new_value -  > THRESHOLD ))
+  if ( ( new_value - r_value > THRESHOLD ) || ( r_value - new_value  > THRESHOLD ))
   {
     return new_value;
   }
-  else if ( ( new_value - w_value > THRESHOLD ) || ( w_value - new_value -  > THRESHOLD ))
+  else if ( ( new_value - w_value > THRESHOLD ) || ( w_value - new_value   > THRESHOLD ))
   {
     return new_value;
   }
